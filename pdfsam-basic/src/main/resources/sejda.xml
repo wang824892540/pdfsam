@@ -21,5 +21,7 @@
 			task="org.sejda.impl.sambox.ExtractPagesTask" />
 		<task parameters="org.sejda.model.parameter.AddBackPagesParameters"
 			  task="org.sejda.impl.sambox.AddBackPagesTask" />
+		<task parameters="org.pdfsam.tools.label.LabelParameters"
+			  task="org.pdfsam.tools.label.LabelBaseTask" />
 	</tasks>
 </sejda>

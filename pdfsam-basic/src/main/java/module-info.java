@@ -17,7 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 module org.pdfsam.basic {
-    requires org.apache.commons.lang3;
     requires org.pdfsam.gui;
     requires org.pdfsam.tools.alternatemix;
     requires org.pdfsam.tools.extract;
@@ -27,10 +26,7 @@ module org.pdfsam.basic {
     requires org.pdfsam.tools.splitbybookmarks;
     requires org.pdfsam.tools.splitbysize;
     requires org.pdfsam.tools.backpages;
-    requires jakarta.inject;
-    requires javafx.graphics;
-    requires org.pdfsam.core;
-    requires org.pdfsam.injector;
+    requires org.pdfsam.tools.label;
 
     exports org.pdfsam.basic;
 }

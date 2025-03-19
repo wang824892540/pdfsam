@@ -24,6 +24,7 @@ import org.pdfsam.injector.Injector;
 import org.pdfsam.tools.alternatemix.AlternateMixTool;
 import org.pdfsam.tools.backpages.AddBackpagesTool;
 import org.pdfsam.tools.extract.ExtractTool;
+import org.pdfsam.tools.label.LabelTool;
 import org.pdfsam.tools.merge.MergeTool;
 import org.pdfsam.tools.rotate.RotateTool;
 import org.pdfsam.tools.split.SplitTool;
@@ -47,7 +48,7 @@ public class App {
         }
 
         Injector.addConfig(new PdfsamBasicConfig(), new AlternateMixTool.ModuleConfig(), new ExtractTool.ModuleConfig(),
-                new MergeTool.ModuleConfig(), new RotateTool.ModuleConfig(), new SplitTool.ModuleConfig(),
+                new LabelTool.ModuleConfig(), new MergeTool.ModuleConfig(), new RotateTool.ModuleConfig(), new SplitTool.ModuleConfig(),
                 new SplitByBookmarksTool.ModuleConfig(), new SplitBySizeTool.ModuleConfig(),
                 new AddBackpagesTool.ModuleConfig());
         Application.launch(PdfsamApp.class, args);
