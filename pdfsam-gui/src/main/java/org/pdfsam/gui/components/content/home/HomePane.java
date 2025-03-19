@@ -67,14 +67,14 @@ public class HomePane extends VBox {
 
     @EventListener
     public void onPremiumModules(PremiumToolsResponse e) {
-        if (!e.premiumTools().isEmpty()) {
-            Label premiumTile = new Label(i18n().tr("Premium features"));
-            premiumTile.getStyleClass().add("modules-tile-title");
-            var permiumToolsPanel = new FlowPane();
-            permiumToolsPanel.getStyleClass().add("home-tools");
-            e.premiumTools().stream().sorted(Comparator.comparingInt(PremiumTool::id)).map(PremiumToolTile::new)
-                    .forEach(permiumToolsPanel.getChildren()::add);
-            Platform.runLater(() -> this.getChildren().addAll(premiumTile, permiumToolsPanel));
-        }
+//        if (!e.premiumTools().isEmpty()) {
+//            Label premiumTile = new Label(i18n().tr("Premium features"));
+//            premiumTile.getStyleClass().add("modules-tile-title");
+//            var permiumToolsPanel = new FlowPane();
+//            permiumToolsPanel.getStyleClass().add("home-tools");
+//            e.premiumTools().stream().sorted(Comparator.comparingInt(PremiumTool::id)).map(PremiumToolTile::new)
+//                    .forEach(permiumToolsPanel.getChildren()::add);
+//            Platform.runLater(() -> this.getChildren().addAll(premiumTile, permiumToolsPanel));
+//        }
     }
 }

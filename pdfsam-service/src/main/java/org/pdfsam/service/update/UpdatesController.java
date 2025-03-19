@@ -54,21 +54,21 @@ public class UpdatesController {
 
     @EventListener
     public void checkForUpdates(UpdateCheckRequest event) {
-        Thread.ofVirtual().name("updates-checker-thread").start(() -> {
-            LOG.debug(i18n().tr("Checking for updates"));
-            try {
-                var currentVersion = service.getLatestVersion();
-                if (isNotBlank(currentVersion)) {
-                    if (!appBrand.property(VERSION).equals(currentVersion)) {
-                        LOG.info(i18n().tr("PDFsam {0} is available for download", currentVersion));
-                        eventStudio().broadcast(new UpdateAvailableEvent(currentVersion));
-                    } else if (event.notifyIfNoUpdates()) {
-                        eventStudio().broadcast(new NoUpdateAvailable());
-                    }
-                }
-            } catch (Exception e) {
-                LOG.warn(i18n().tr("Unable to find the latest available version."), e);
-            }
-        });
+//        Thread.ofVirtual().name("updates-checker-thread").start(() -> {
+//            LOG.debug(i18n().tr("Checking for updates"));
+//            try {
+//                var currentVersion = service.getLatestVersion();
+//                if (isNotBlank(currentVersion)) {
+//                    if (!appBrand.property(VERSION).equals(currentVersion)) {
+//                        LOG.info(i18n().tr("PDFsam {0} is available for download", currentVersion));
+//                        eventStudio().broadcast(new UpdateAvailableEvent(currentVersion));
+//                    } else if (event.notifyIfNoUpdates()) {
+//                        eventStudio().broadcast(new NoUpdateAvailable());
+//                    }
+//                }
+//            } catch (Exception e) {
+//                LOG.warn(i18n().tr("Unable to find the latest available version."), e);
+//            }
+//        });
     }
 }
