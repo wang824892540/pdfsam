@@ -121,6 +121,11 @@
         </dependency>
         <dependency>
             <groupId>org.pdfsam</groupId>
+            <artifactId>pdfsam-label</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.pdfsam</groupId>
             <artifactId>pdfsam-backpages</artifactId>
             <version>${project.version}</version>
         </dependency>

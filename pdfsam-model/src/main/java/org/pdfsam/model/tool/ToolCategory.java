@@ -28,6 +28,8 @@ import static org.pdfsam.i18n.I18nContext.i18n;
 public enum ToolCategory {
     SPLIT(i18n().tr("Split tools"), "category-split"),
 
+    LABEL(i18n().tr("Label tools"), "category-label"),
+
     MERGE(i18n().tr("Merge tools"), "category-merge"),
 
     CONVERT(i18n().tr("Convert tools"), "category-convert"),
