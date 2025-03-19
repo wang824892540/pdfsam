@@ -4,6 +4,7 @@ module org.pdfsam.tools.label {
     requires org.pdfsam.ui.components;
     requires org.kordamp.ikonli.javafx;
     requires org.pdfsam.i18n;
+    requires jakarta.inject;
 
     exports org.pdfsam.tools.label;
 
