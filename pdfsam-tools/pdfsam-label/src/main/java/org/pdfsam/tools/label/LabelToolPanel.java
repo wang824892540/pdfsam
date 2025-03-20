@@ -35,6 +35,7 @@ import static org.pdfsam.ui.components.support.Views.titledPane;
 public class LabelToolPanel extends BaseToolPanel {
 
     private final PdfDestinationPane destinationPane;
+    private final PaperChoosePane paperChoosePane;
     private final PrefixPane prefix;
 
     @Inject
@@ -44,6 +45,7 @@ public class LabelToolPanel extends BaseToolPanel {
                           @Named(TOOL_ID + "prefix") PrefixPane prefix) {
         super(TOOL_ID, footer);
         this.destinationPane = destinationPane;
+        this.paperChoosePane = new PaperChoosePane(TOOL_ID);
         this.prefix = prefix;
         initModuleSettingsPanel(getPanel());
     }
@@ -57,7 +59,7 @@ public class LabelToolPanel extends BaseToolPanel {
 
         // 创建 VBox 并添加按钮
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(titledPane(i18n().tr("Output settings"), destinationPane), prefixTitled);
+        vBox.getChildren().addAll(titledPane(i18n().tr("Output settings"), destinationPane), paperChoosePane, prefixTitled);
         return vBox;
     }
 
@@ -76,4 +78,6 @@ public class LabelToolPanel extends BaseToolPanel {
     protected Builder<? extends AbstractParameters> getBuilder(Consumer<String> onError) {
         return new LabelParametersBuilder();
     }
+
 }
+

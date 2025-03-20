@@ -9,9 +9,28 @@ import java.io.File;
 
 public class LabelParameters extends MultiplePdfSourceMultipleOutputParameters {
 
+    File sourceFile;
+    File backPagesSourceSourceFile;
+
     public LabelParameters() {
-        addSource(PdfFileSource.newInstanceNoPassword(new File("C:\\Users\\hxw\\Desktop\\xx.pdf")));
-        setOutput(new FileOrDirectoryTaskOutput(new File("C:\\Users\\hxw\\Desktop\\xx.pdf")));
+        addSource(PdfFileSource.newInstanceNoPassword(sourceFile));
+        addSource(PdfFileSource.newInstanceNoPassword(backPagesSourceSourceFile));
+        setOutput(new FileOrDirectoryTaskOutput(sourceFile.getParentFile()));
     }
 
+    public File getSourceFile() {
+        return sourceFile;
+    }
+
+    public void setSourceFile(File sourceFile) {
+        this.sourceFile = sourceFile;
+    }
+
+    public File getBackPagesSourceSourceFile() {
+        return backPagesSourceSourceFile;
+    }
+
+    public void setBackPagesSourceSourceFile(File backPagesSourceSourceFile) {
+        this.backPagesSourceSourceFile = backPagesSourceSourceFile;
+    }
 }
