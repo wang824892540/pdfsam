@@ -2,6 +2,7 @@ package org.pdfsam.tools.label;
 
 import javafx.scene.layout.VBox;
 import org.pdfsam.core.support.params.TaskParametersBuildStep;
+import org.pdfsam.ui.components.commons.ValidableTextField;
 import org.pdfsam.ui.components.selection.single.SingleSelectionPane;
 import org.sejda.conversion.PdfFileSourceAdapter;
 import org.sejda.model.input.PdfFileSource;
@@ -16,7 +17,7 @@ import static org.pdfsam.i18n.I18nContext.i18n;
  * @author y
  * @date 2025/03/19 18:27
  **/
-public class PaperChoosePane extends VBox{
+public class PaperChoosePane extends VBox implements TaskParametersBuildStep<LabelParametersBuilder>{
 
     private final SingleSelectionPane backpagesSourceField;
 
@@ -27,4 +28,12 @@ public class PaperChoosePane extends VBox{
         this.backpagesSourceField.setId("backpagesSource");
         this.getChildren().add(backpagesSourceField);
     }
+
+    @Override
+    public void apply(LabelParametersBuilder builder, Consumer<String> onError) {
+        final ValidableTextField textField = backpagesSourceField.getField().getTextField();
+        textField.validate();
+        builder.setBackPagesSource(new PdfFileSourceAdapter(textField.getText()).getPdfFileSource());
+    }
 }
+

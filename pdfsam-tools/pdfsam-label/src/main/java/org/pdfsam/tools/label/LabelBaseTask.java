@@ -1,18 +1,21 @@
 package org.pdfsam.tools.label;
 
 import org.sejda.model.exception.TaskException;
+import org.sejda.model.input.PdfSource;
 import org.sejda.model.output.DirectoryTaskOutput;
 import org.sejda.model.output.FileOrDirectoryTaskOutput;
 import org.sejda.model.output.FileTaskOutput;
 import org.sejda.model.output.TaskOutputDispatcher;
 import org.sejda.model.task.BaseTask;
 
+import java.io.File;
 import java.io.IOException;
 
 public class LabelBaseTask extends BaseTask<LabelParameters> {
 
     @Override
     public void execute(LabelParameters parameters) throws TaskException {
+        final PdfSource<?> backPagesSourceSourceFile = parameters.backPagesSourceSourceFile;
         parameters.getOutput().accept(new TaskOutputDispatcher() {
             @Override
             public void dispatch(FileTaskOutput output) throws IOException {

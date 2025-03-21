@@ -7,6 +7,8 @@ module org.pdfsam.tools.label {
     requires jakarta.inject;
 
     exports org.pdfsam.tools.label;
+    requires org.apache.commons.lang3;
+    opens org.pdfsam.tools.label to org.apache.commons.lang3;
 
     provides Tool with org.pdfsam.tools.label.LabelTool;
 }

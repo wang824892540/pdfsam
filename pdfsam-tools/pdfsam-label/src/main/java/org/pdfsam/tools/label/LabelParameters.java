@@ -1,36 +1,25 @@
 package org.pdfsam.tools.label;
 
-import org.sejda.model.input.PdfFileSource;
-import org.sejda.model.output.FileOrDirectoryTaskOutput;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import org.sejda.model.input.PdfSource;
 import org.sejda.model.output.SingleOrMultipleTaskOutput;
 import org.sejda.model.parameter.base.MultiplePdfSourceMultipleOutputParameters;
-
-import java.io.File;
+import org.sejda.model.validation.constraint.NoIntersections;
 
 public class LabelParameters extends MultiplePdfSourceMultipleOutputParameters {
 
-    File sourceFile;
-    File backPagesSourceSourceFile;
+    PdfSource<?> backPagesSourceSourceFile;
 
     public LabelParameters() {
-        addSource(PdfFileSource.newInstanceNoPassword(sourceFile));
-        addSource(PdfFileSource.newInstanceNoPassword(backPagesSourceSourceFile));
-        setOutput(new FileOrDirectoryTaskOutput(sourceFile.getParentFile()));
     }
 
-    public File getSourceFile() {
-        return sourceFile;
-    }
-
-    public void setSourceFile(File sourceFile) {
-        this.sourceFile = sourceFile;
-    }
-
-    public File getBackPagesSourceSourceFile() {
+    public PdfSource<?> getBackPagesSourceSourceFile() {
         return backPagesSourceSourceFile;
     }
 
-    public void setBackPagesSourceSourceFile(File backPagesSourceSourceFile) {
+    public void setBackPagesSourceSourceFile(PdfSource<?> backPagesSourceSourceFile) {
         this.backPagesSourceSourceFile = backPagesSourceSourceFile;
     }
+
 }

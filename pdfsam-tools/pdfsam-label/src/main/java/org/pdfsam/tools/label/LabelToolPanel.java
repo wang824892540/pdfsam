@@ -8,17 +8,21 @@ import javafx.scene.layout.VBox;
 import org.apache.commons.lang3.builder.Builder;
 import org.pdfsam.core.support.params.MultiplePdfSourceMultipleOutputParametersBuilder;
 import org.pdfsam.ui.components.io.BrowsableOutputDirectoryField;
+import org.pdfsam.ui.components.io.BrowsablePdfOutputField;
 import org.pdfsam.ui.components.io.PdfDestinationPane;
 import org.pdfsam.ui.components.prefix.PrefixPane;
+import org.pdfsam.ui.components.selection.single.TaskParametersBuilderSingleSelectionPane;
 import org.pdfsam.ui.components.support.Views;
 import org.pdfsam.ui.components.tool.BaseToolPanel;
 import org.pdfsam.ui.components.tool.Footer;
+import org.sejda.model.output.FileOrDirectoryTaskOutput;
 import org.sejda.model.output.TaskOutput;
 import org.sejda.model.parameter.base.AbstractParameters;
 import org.sejda.model.parameter.base.MultiplePdfSourceMultipleOutputParameters;
 import org.sejda.model.parameter.base.MultiplePdfSourceSingleOutputParameters;
 import org.sejda.model.prefix.Prefix;
 
+import java.io.File;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -34,9 +38,12 @@ import static org.pdfsam.ui.components.support.Views.titledPane;
  **/
 public class LabelToolPanel extends BaseToolPanel {
 
+//    private final PaperChoosePane paperChoosePane;
+//    private final PrefixPane prefix;
+    private final TaskParametersBuilderSingleSelectionPane selectionPane;
     private final PdfDestinationPane destinationPane;
-    private final PaperChoosePane paperChoosePane;
-    private final PrefixPane prefix;
+    PaperChoosePane paperChoosePane;
+    private final BrowsableOutputDirectoryField destinationDirectoryField;
 
     @Inject
     public LabelToolPanel(@Named(TOOL_ID + "field") BrowsableOutputDirectoryField destinationDirectoryField,
@@ -44,22 +51,24 @@ public class LabelToolPanel extends BaseToolPanel {
                           @Named(TOOL_ID + "footer") Footer footer,
                           @Named(TOOL_ID + "prefix") PrefixPane prefix) {
         super(TOOL_ID, footer);
-        this.destinationPane = destinationPane;
+        this.selectionPane = new TaskParametersBuilderSingleSelectionPane(TOOL_ID);
+        this.destinationDirectoryField = destinationDirectoryField;
         this.paperChoosePane = new PaperChoosePane(TOOL_ID);
-        this.prefix = prefix;
+        this.destinationPane = destinationPane;
+//        this.prefix = prefix;
         initModuleSettingsPanel(getPanel());
     }
 
     private VBox getPanel() {
         // 创建两个按钮
 
-        TitledPane prefixTitled = Views.titledPane(i18n().tr("File names settings"), prefix);
-        prefix.addMenuItemFor(Prefix.FILENUMBER);
-        prefix.addMenuItemFor("[TOTAL_FILESNUMBER]");
+//        TitledPane prefixTitled = Views.titledPane(i18n().tr("File names settings"), prefix);
+//        prefix.addMenuItemFor(Prefix.FILENUMBER);
+//        prefix.addMenuItemFor("[TOTAL_FILESNUMBER]");
 
         // 创建 VBox 并添加按钮
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(titledPane(i18n().tr("Output settings"), destinationPane), paperChoosePane, prefixTitled);
+        vBox.getChildren().addAll(selectionPane, titledPane(i18n().tr("Output settings"), paperChoosePane), destinationPane);
         return vBox;
     }
 
@@ -76,7 +85,13 @@ public class LabelToolPanel extends BaseToolPanel {
 
     @Override
     protected Builder<? extends AbstractParameters> getBuilder(Consumer<String> onError) {
-        return new LabelParametersBuilder();
+        final LabelParametersBuilder labelParametersBuilder = new LabelParametersBuilder();
+        paperChoosePane.apply(labelParametersBuilder, onError);
+        selectionPane.apply(labelParametersBuilder, onError);
+        var destinationField = destinationDirectoryField.getTextField();
+        destinationField.validate();
+        labelParametersBuilder.output(FileOrDirectoryTaskOutput.directory(new File(destinationField.getText())));
+        return labelParametersBuilder;
     }
 
 }
