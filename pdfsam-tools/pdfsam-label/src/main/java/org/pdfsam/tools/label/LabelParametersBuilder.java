@@ -16,23 +16,23 @@ import java.io.File;
  **/
 public class LabelParametersBuilder extends MultiplePdfSourceMultipleOutputParametersBuilder<LabelParameters> implements SinglePdfSourceTaskParametersBuilder<LabelParameters> {
 
-    private PdfFileSource backPagesSource;
+    PdfFileSource backPdf;
 
     @Override
     public LabelParameters build() {
         LabelParameters labelParameters = new LabelParameters();
-        labelParameters.setBackPagesSourceSourceFile(backPagesSource);
         labelParameters.setOutput(getOutput());
+        labelParameters.setBackPdf(backPdf);
         getInputs().forEach(labelParameters::addSource);
         return labelParameters;
     }
 
-    public PdfFileSource getBackPagesSource() {
-        return backPagesSource;
+    public PdfFileSource getBackPdf() {
+        return backPdf;
     }
 
-    public void setBackPagesSource(PdfFileSource backPagesSource) {
-        this.backPagesSource = backPagesSource;
+    public void setBackPdf(PdfFileSource backPdf) {
+        this.backPdf = backPdf;
     }
 
     @Override

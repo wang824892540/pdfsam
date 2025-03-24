@@ -10,12 +10,13 @@ import org.sejda.model.task.BaseTask;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class LabelBaseTask extends BaseTask<LabelParameters> {
 
     @Override
     public void execute(LabelParameters parameters) throws TaskException {
-        final PdfSource<?> backPagesSourceSourceFile = parameters.backPagesSourceSourceFile;
+        List<PdfSource<?>> sourceList = parameters.getSourceList();
         parameters.getOutput().accept(new TaskOutputDispatcher() {
             @Override
             public void dispatch(FileTaskOutput output) throws IOException {

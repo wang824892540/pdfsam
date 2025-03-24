@@ -2,6 +2,7 @@ package org.pdfsam.tools.label;
 
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.VBox;
@@ -41,9 +42,10 @@ public class LabelToolPanel extends BaseToolPanel {
 //    private final PaperChoosePane paperChoosePane;
 //    private final PrefixPane prefix;
     private final TaskParametersBuilderSingleSelectionPane selectionPane;
-    private final PdfDestinationPane destinationPane;
-    PaperChoosePane paperChoosePane;
+    private final PaperChoosePane paperChoosePane;
     private final BrowsableOutputDirectoryField destinationDirectoryField;
+    private final PdfDestinationPane destinationPane;
+//    PaperChoosePane paperChoosePane;
 
     @Inject
     public LabelToolPanel(@Named(TOOL_ID + "field") BrowsableOutputDirectoryField destinationDirectoryField,
@@ -60,15 +62,10 @@ public class LabelToolPanel extends BaseToolPanel {
     }
 
     private VBox getPanel() {
-        // 创建两个按钮
-
-//        TitledPane prefixTitled = Views.titledPane(i18n().tr("File names settings"), prefix);
-//        prefix.addMenuItemFor(Prefix.FILENUMBER);
-//        prefix.addMenuItemFor("[TOTAL_FILESNUMBER]");
-
         // 创建 VBox 并添加按钮
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(selectionPane, titledPane(i18n().tr("Output settings"), paperChoosePane), destinationPane);
+        vBox.setAlignment(Pos.TOP_CENTER);
+        vBox.getChildren().addAll(titledPane(i18n().tr("A"), selectionPane), titledPane(i18n().tr("B"), paperChoosePane), titledPane(i18n().tr("output"), destinationPane));
         return vBox;
     }
 
