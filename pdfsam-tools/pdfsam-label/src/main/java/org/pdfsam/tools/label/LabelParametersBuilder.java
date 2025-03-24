@@ -4,6 +4,7 @@ import org.pdfsam.core.support.params.MultiplePdfSourceMultipleOutputParametersB
 import org.pdfsam.core.support.params.SinglePdfSourceTaskParametersBuilder;
 import org.pdfsam.ui.components.selection.single.SingleSelectionPane;
 import org.sejda.model.input.PdfFileSource;
+import org.sejda.model.output.ExistingOutputPolicy;
 import org.sejda.model.output.SingleOrMultipleTaskOutput;
 
 import java.io.File;
@@ -23,6 +24,7 @@ public class LabelParametersBuilder extends MultiplePdfSourceMultipleOutputParam
         LabelParameters labelParameters = new LabelParameters();
         labelParameters.setOutput(getOutput());
         labelParameters.setBackPdf(backPdf);
+        labelParameters.setExistingOutputPolicy(ExistingOutputPolicy.OVERWRITE);
         getInputs().forEach(labelParameters::addSource);
         return labelParameters;
     }

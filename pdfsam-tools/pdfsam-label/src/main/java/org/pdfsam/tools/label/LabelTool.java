@@ -71,7 +71,7 @@ public class LabelTool implements Tool {
         @Provides
         @Named(TOOL_ID + "pane")
         public PdfDestinationPane destinationPane(@Named(TOOL_ID + "field") BrowsableOutputDirectoryField outputField) {
-            return new PdfDestinationPane(outputField, TOOL_ID, DISCARD_BOOKMARKS);
+            return new PdfDestinationPane(outputField, TOOL_ID);
         }
 
         @Provides

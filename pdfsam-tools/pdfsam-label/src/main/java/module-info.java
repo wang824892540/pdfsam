@@ -5,8 +5,9 @@ module org.pdfsam.tools.label {
     requires org.kordamp.ikonli.javafx;
     requires org.pdfsam.i18n;
     requires jakarta.inject;
-    requires org.apache.commons.lang3;
     requires org.hibernate.validator;
+    requires org.sejda.core;
+    requires org.apache.pdfbox;
 
     exports org.pdfsam.tools.label;
     opens org.pdfsam.tools.label to org.hibernate.validator,org.apache.commons.lang3;

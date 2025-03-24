@@ -8,11 +8,15 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.layout.VBox;
 import org.apache.commons.lang3.builder.Builder;
 import org.pdfsam.core.support.params.MultiplePdfSourceMultipleOutputParametersBuilder;
+import org.pdfsam.eventstudio.annotation.EventListener;
+import org.pdfsam.eventstudio.annotation.EventStation;
+import org.pdfsam.model.tool.ClearToolRequest;
 import org.pdfsam.ui.components.io.BrowsableOutputDirectoryField;
 import org.pdfsam.ui.components.io.BrowsablePdfOutputField;
 import org.pdfsam.ui.components.io.PdfDestinationPane;
 import org.pdfsam.ui.components.prefix.PrefixPane;
 import org.pdfsam.ui.components.selection.single.TaskParametersBuilderSingleSelectionPane;
+import org.pdfsam.ui.components.support.FXValidationSupport;
 import org.pdfsam.ui.components.support.Views;
 import org.pdfsam.ui.components.tool.BaseToolPanel;
 import org.pdfsam.ui.components.tool.Footer;
@@ -39,19 +43,15 @@ import static org.pdfsam.ui.components.support.Views.titledPane;
  **/
 public class LabelToolPanel extends BaseToolPanel {
 
-//    private final PaperChoosePane paperChoosePane;
-//    private final PrefixPane prefix;
     private final TaskParametersBuilderSingleSelectionPane selectionPane;
     private final PaperChoosePane paperChoosePane;
     private final BrowsableOutputDirectoryField destinationDirectoryField;
     private final PdfDestinationPane destinationPane;
-//    PaperChoosePane paperChoosePane;
 
     @Inject
     public LabelToolPanel(@Named(TOOL_ID + "field") BrowsableOutputDirectoryField destinationDirectoryField,
                           @Named(TOOL_ID + "pane") PdfDestinationPane destinationPane,
-                          @Named(TOOL_ID + "footer") Footer footer,
-                          @Named(TOOL_ID + "prefix") PrefixPane prefix) {
+                          @Named(TOOL_ID + "footer") Footer footer) {
         super(TOOL_ID, footer);
         this.selectionPane = new TaskParametersBuilderSingleSelectionPane(TOOL_ID);
         this.destinationDirectoryField = destinationDirectoryField;
@@ -65,7 +65,7 @@ public class LabelToolPanel extends BaseToolPanel {
         // 创建 VBox 并添加按钮
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.TOP_CENTER);
-        vBox.getChildren().addAll(titledPane(i18n().tr("A"), selectionPane), titledPane(i18n().tr("B"), paperChoosePane), titledPane(i18n().tr("output"), destinationPane));
+        vBox.getChildren().addAll(selectionPane, titledPane(i18n().tr("B"), paperChoosePane), titledPane(i18n().tr("output"), destinationPane));
         return vBox;
     }
 
@@ -82,13 +82,32 @@ public class LabelToolPanel extends BaseToolPanel {
 
     @Override
     protected Builder<? extends AbstractParameters> getBuilder(Consumer<String> onError) {
-        final LabelParametersBuilder labelParametersBuilder = new LabelParametersBuilder();
-        paperChoosePane.apply(labelParametersBuilder, onError);
-        selectionPane.apply(labelParametersBuilder, onError);
+        final LabelParametersBuilder builder = new LabelParametersBuilder();
         var destinationField = destinationDirectoryField.getTextField();
         destinationField.validate();
-        labelParametersBuilder.output(FileOrDirectoryTaskOutput.directory(new File(destinationField.getText())));
-        return labelParametersBuilder;
+        if (destinationField.getValidationState() == FXValidationSupport.ValidationState.VALID) {
+            builder.output(FileOrDirectoryTaskOutput.directory(new File(destinationField.getText())));
+        } else {
+            onError.accept(i18n().tr("A directory is required"));
+        }
+        destinationPane.apply(builder, onError);
+        paperChoosePane.apply(builder, onError);
+        selectionPane.apply(builder, onError);
+        return builder;
+    }
+
+
+    @EventStation
+    public String id() {
+        return TOOL_ID;
+    }
+
+    @EventListener
+    public void onClearModule(ClearToolRequest e) {
+        if (e.clearEverything()) {
+            paperChoosePane.resetView();
+            destinationPane.resetView();
+        }
     }
 
 }

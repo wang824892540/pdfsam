@@ -44,6 +44,14 @@
             <artifactId>sejda-model</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.sejda</groupId>
+            <artifactId>sejda-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.pdfsam</groupId>
             <artifactId>pdfsam-ui-components</artifactId>
             <version>${project.version}</version>
