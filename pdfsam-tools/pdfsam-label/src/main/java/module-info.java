@@ -8,6 +8,7 @@ module org.pdfsam.tools.label {
     requires org.hibernate.validator;
     requires org.sejda.core;
     requires org.apache.pdfbox;
+    requires org.slf4j;
 
     exports org.pdfsam.tools.label;
     opens org.pdfsam.tools.label to org.hibernate.validator,org.apache.commons.lang3;

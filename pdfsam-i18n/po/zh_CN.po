@@ -26,6 +26,45 @@ msgstr "提取(_E)"
 msgid "Extract pages from PDF documents."
 msgstr "从PDF文档中提取页面。"
 
+msgid "width cannot be empty"
+msgstr "宽不能为空"
+
+msgid "width"
+msgstr "宽"
+
+msgid "height"
+msgstr "高"
+
+msgid "file name"
+msgstr "文件名"
+
+msgid "height cannot be empty"
+msgstr "高不能为空"
+
+msgid "file name cannot be empty"
+msgstr "文件名不能为空"
+
+msgid "A directory is required"
+msgstr "保存目录不能为空"
+
+msgid "odet file"
+msgstr "欧代文件"
+
+msgid "Shein-Label"
+msgstr "Shein标签"
+
+msgid "barcode file"
+msgstr "条码文件"
+
+msgid "combined size"
+msgstr "输出尺寸"
+
+msgid "combined setting"
+msgstr "输出设置"
+
+msgid "output directory"
+msgstr "保存目录"
+
 msgid "File names settings"
 msgstr "文件名设置"
 
@@ -896,6 +935,12 @@ msgstr "拉取最近新闻"
 
 msgid "Unable to retrieve the latest news"
 msgstr "无法获取最近新闻"
+
+msgid "Error"
+msgstr "错误"
+
+msgid "ERROR"
+msgstr "错误"
 
 #, java-format
 msgid "Saving workspace data to {0}"

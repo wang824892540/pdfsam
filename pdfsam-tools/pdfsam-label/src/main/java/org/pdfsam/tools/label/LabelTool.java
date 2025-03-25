@@ -31,11 +31,11 @@ import static org.pdfsam.ui.components.io.PdfDestinationPane.DestinationPanelFie
 @Auto
 public class LabelTool implements Tool {
 
-    static final String TOOL_ID = "label";
+    static final String TOOL_ID = "Shein-Label";
 
     private final ToolDescriptor descriptor = builder().category(ToolCategory.LABEL)
-            .inputTypes(ToolInputOutputType.MULTIPLE_PDF, ToolInputOutputType.SINGLE_PDF).name(i18n().tr("Label"))
-            .description(i18n().tr("Label pages from PDF documents.")).priority(ToolPriority.DEFAULT.getPriority())
+            .inputTypes(ToolInputOutputType.MULTIPLE_PDF, ToolInputOutputType.SINGLE_PDF).name(i18n().tr(TOOL_ID))
+            .description(i18n().tr("Shein Label pages from PDF documents.")).priority(ToolPriority.DEFAULT.getPriority())
             //.supportURL("https://pdfsam.org/pdf-extract-pages/")
             .build();
 

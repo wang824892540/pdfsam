@@ -11,6 +11,33 @@ import org.sejda.model.validation.constraint.NoIntersections;
 public class LabelParameters extends MultiplePdfSourceMultipleOutputParameters {
 
     PdfFileSource backPdf;
+    Float width;
+    Float height;
+    String fileName;
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public Float getWidth() {
+        return width;
+    }
+
+    public void setWidth(Float width) {
+        this.width = width;
+    }
+
+    public Float getHeight() {
+        return height;
+    }
+
+    public void setHeight(Float height) {
+        this.height = height;
+    }
 
     public LabelParameters() {
     }

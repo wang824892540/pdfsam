@@ -18,6 +18,17 @@ import java.io.File;
 public class LabelParametersBuilder extends MultiplePdfSourceMultipleOutputParametersBuilder<LabelParameters> implements SinglePdfSourceTaskParametersBuilder<LabelParameters> {
 
     PdfFileSource backPdf;
+    Float width;
+    Float height;
+    String fileName;
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
     @Override
     public LabelParameters build() {
@@ -25,6 +36,9 @@ public class LabelParametersBuilder extends MultiplePdfSourceMultipleOutputParam
         labelParameters.setOutput(getOutput());
         labelParameters.setBackPdf(backPdf);
         labelParameters.setExistingOutputPolicy(ExistingOutputPolicy.OVERWRITE);
+        labelParameters.setWidth(width);
+        labelParameters.setHeight(height);
+        labelParameters.setFileName(fileName);
         getInputs().forEach(labelParameters::addSource);
         return labelParameters;
     }
@@ -42,4 +56,19 @@ public class LabelParametersBuilder extends MultiplePdfSourceMultipleOutputParam
         addSource(source);
     }
 
+    public Float getWidth() {
+        return width;
+    }
+
+    public void setWidth(Float width) {
+        this.width = width;
+    }
+
+    public Float getHeight() {
+        return height;
+    }
+
+    public void setHeight(Float height) {
+        this.height = height;
+    }
 }

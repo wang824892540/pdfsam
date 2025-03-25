@@ -1,12 +1,14 @@
 package org.pdfsam.tools.label;
 
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.pdfsam.core.support.params.TaskParametersBuildStep;
 import org.pdfsam.model.ui.ResettableView;
+import org.pdfsam.tools.module.TextFieldWithUnit;
 import org.pdfsam.ui.components.commons.ValidableTextField;
 import org.pdfsam.ui.components.selection.single.SingleSelectionPane;
-import org.pdfsam.ui.components.selection.single.TaskParametersBuilderSingleSelectionPane;
 import org.pdfsam.ui.components.support.FXValidationSupport;
 import org.pdfsam.ui.components.support.Style;
 import org.sejda.conversion.PdfFileSourceAdapter;
@@ -30,10 +32,12 @@ public class PaperChoosePane extends VBox implements TaskParametersBuildStep<Lab
         getStyleClass().addAll(Style.CONTAINER.css());
         getStyleClass().addAll(Style.VCONTAINER.css());
         backpagesSourceField = new SingleSelectionPane(ownerModule, false);
+
         this.backpagesSourceField.setPromptText(
                 i18n().tr("Select or drag and drop the PDF whose pages will be repeated"));
         this.backpagesSourceField.setId("backpagesSource");
-        this.getChildren().add(backpagesSourceField);
+
+        this.getChildren().addAll(backpagesSourceField);
     }
 
     @Override
@@ -50,6 +54,7 @@ public class PaperChoosePane extends VBox implements TaskParametersBuildStep<Lab
     @Override
     public void resetView() {
     }
+
 
 }
 
