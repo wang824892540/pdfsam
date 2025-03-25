@@ -33,7 +33,7 @@ import static org.sejda.commons.util.RequireUtils.requireNotNullArg;
  * @author Andrea Vacondio
  * 
  */
-class DestinationPane extends VBox implements ResettableView {
+public class DestinationPane extends VBox implements ResettableView {
 
     private final CheckBox overwrite = new CheckBox(i18n().tr("Overwrite if already exists"));
     private final BrowsableField destination;

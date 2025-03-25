@@ -1,22 +1,39 @@
 package org.pdfsam.tools.label;
 
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.pdfsam.core.context.BooleanPersistentProperty;
 import org.pdfsam.core.support.params.TaskParametersBuildStep;
 import org.pdfsam.core.support.validation.Validators;
+import org.pdfsam.eventstudio.annotation.EventListener;
+import org.pdfsam.eventstudio.annotation.EventStation;
+import org.pdfsam.model.io.FileType;
+import org.pdfsam.model.io.OpenType;
+import org.pdfsam.model.tool.ToolBound;
 import org.pdfsam.model.ui.ResettableView;
+import org.pdfsam.model.ui.SetDestinationRequest;
 import org.pdfsam.tools.module.TextFieldWithUnit;
 import org.pdfsam.ui.components.commons.ValidableTextField;
+import org.pdfsam.ui.components.io.BrowsableFileField;
+import org.pdfsam.ui.components.io.BrowsableOutputDirectoryField;
+import org.pdfsam.ui.components.io.PdfDestinationPane;
+import org.pdfsam.ui.components.selection.single.SingleSelectionPane;
 import org.pdfsam.ui.components.support.Style;
 
 import java.time.Instant;
 import java.util.function.Consumer;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.pdfsam.core.context.ApplicationContext.app;
+import static org.pdfsam.eventstudio.StaticStudio.eventStudio;
 import static org.pdfsam.i18n.I18nContext.i18n;
+import static org.pdfsam.tools.label.LabelTool.TOOL_ID;
 
 /**
  * 欧代文件
@@ -24,14 +41,20 @@ import static org.pdfsam.i18n.I18nContext.i18n;
  * @author y
  * @date 2025/03/19 18:27
  **/
-public class SizeChoosePane extends VBox implements TaskParametersBuildStep<LabelParametersBuilder>, ResettableView {
+public class SizeChoosePane extends VBox implements TaskParametersBuildStep<LabelParametersBuilder>, ToolBound {
 
     private final ValidableTextField width;
     private final ValidableTextField height;
     private final ValidableTextField fileName;
+    private final BrowsableOutputDirectoryField outputDir;
+    private final String toolBinding;
 
-    public SizeChoosePane(String ownerModule) {
+    @Inject
+    public SizeChoosePane(@Named(TOOL_ID + "field") BrowsableOutputDirectoryField destinationPane, String owner) {
         super(Style.DEFAULT_SPACING);
+        toolBinding = owner;
+        destinationPane.setId(owner + ".destination");
+
         getStyleClass().addAll(Style.CONTAINER.css());
         getStyleClass().addAll(Style.VCONTAINER.css());
         width = new ValidableTextField();
@@ -55,20 +78,25 @@ public class SizeChoosePane extends VBox implements TaskParametersBuildStep<Labe
         fileName.setErrorMessage(i18n().tr("file name cannot be empty"));
         final TextFieldWithUnit fileNameUnit = new TextFieldWithUnit(fileName, ".pdf", 110D);
 
-        // 使用 HBox 将 width 和 height 放在同一行
+        outputDir = destinationPane;
 
-        final Label fileNameLabel = new Label(i18n().tr("FileName: "));
+        final Label outputDirLabel = new Label(i18n().tr("output directory"));
+        HBox widthHeightBoxOutputDir = new HBox(Style.DEFAULT_SPACING);
+        widthHeightBoxOutputDir.setAlignment(Pos.CENTER_LEFT);
+        widthHeightBoxOutputDir.getChildren().addAll(outputDirLabel, outputDir);
+
+        final Label fileNameLabel = new Label(i18n().tr("FileName"));
         HBox widthHeightBoxFileName = new HBox(Style.DEFAULT_SPACING);
         widthHeightBoxFileName.setAlignment(Pos.CENTER_LEFT);
         widthHeightBoxFileName.getChildren().addAll(fileNameLabel, fileNameUnit);
 
         HBox widthHeightBox = new HBox(Style.DEFAULT_SPACING);
         widthHeightBox.setAlignment(Pos.CENTER_LEFT);
-        final Label widthLabel = new Label(i18n().tr("Width: "));
-        final Label heightLabel = new Label(i18n().tr("Height: "));
+        final Label widthLabel = new Label(i18n().tr("Width"));
+        final Label heightLabel = new Label(i18n().tr("Height"));
         widthHeightBox.getChildren().addAll(widthLabel, widthWithUnit, heightLabel, heightWithUnit);
 
-        this.getChildren().addAll(widthHeightBoxFileName, widthHeightBox);
+        this.getChildren().addAll(widthHeightBoxOutputDir, widthHeightBoxFileName, widthHeightBox);
     }
 
     @Override
@@ -88,17 +116,31 @@ public class SizeChoosePane extends VBox implements TaskParametersBuildStep<Labe
             onError.accept(i18n().tr("file name cannot be empty"));
             return;
         }
+        ValidableTextField textField = outputDir.getTextField();
+        textField.validate();
+
         builder.setWidth(Float.valueOf(widthDouble));
         builder.setHeight(Float.valueOf(heightDouble));
         builder.setFileName(fileNameText);
+        builder.setOutputDir(outputDir);
     }
 
     @Override
-    public void resetView() {
-        width.setText("7");
-        height.setText("6");
+    @EventStation
+    public String toolBinding() {
+        return toolBinding;
     }
 
+    @EventListener
+    public void setDestination(SetDestinationRequest event) {
+        if (!event.fallback() || (isBlank(destination().getTextField().getText()) && app().persistentSettings()
+                .get(BooleanPersistentProperty.SMART_OUTPUT))) {
+            destination().setTextFromFile(event.footprint().toPath());
+        }
+    }
 
+    public BrowsableOutputDirectoryField destination() {
+        return outputDir;
+    }
 }
 
