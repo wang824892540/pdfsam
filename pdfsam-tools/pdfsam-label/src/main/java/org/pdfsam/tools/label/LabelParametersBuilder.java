@@ -4,6 +4,7 @@ import org.pdfsam.core.support.params.MultiplePdfSourceMultipleOutputParametersB
 import org.pdfsam.core.support.params.SinglePdfSourceTaskParametersBuilder;
 import org.pdfsam.ui.components.io.BrowsableFileField;
 import org.pdfsam.ui.components.io.BrowsableOutputDirectoryField;
+import org.pdfsam.ui.components.io.PdfDestinationPane;
 import org.pdfsam.ui.components.selection.single.SingleSelectionPane;
 import org.sejda.model.input.PdfFileSource;
 import org.sejda.model.output.ExistingOutputPolicy;
@@ -23,15 +24,7 @@ public class LabelParametersBuilder extends MultiplePdfSourceMultipleOutputParam
     Float width;
     Float height;
     String fileName;
-    BrowsableOutputDirectoryField outputDir;
 
-    public BrowsableOutputDirectoryField getOutputDir() {
-        return outputDir;
-    }
-
-    public void setOutputDir(BrowsableOutputDirectoryField outputDir) {
-        this.outputDir = outputDir;
-    }
 
     public String getFileName() {
         return fileName;
@@ -50,7 +43,6 @@ public class LabelParametersBuilder extends MultiplePdfSourceMultipleOutputParam
         labelParameters.setWidth(width);
         labelParameters.setHeight(height);
         labelParameters.setFileName(fileName);
-        labelParameters.setOutputDir(outputDir);
         getInputs().forEach(labelParameters::addSource);
         return labelParameters;
     }

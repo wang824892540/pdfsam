@@ -37,23 +37,20 @@ public class LabelToolPanel extends BaseToolPanel {
     private final TaskParametersBuilderSingleSelectionPane selectionPane;
     private final PaperChoosePane paperChoosePane;
     private final BrowsableOutputDirectoryField destinationDirectoryField;
-    // private final PdfDestinationPane destinationPane;
+//    private final PdfDestinationPane destinationPane;
     private final SizeChoosePane sizeChoosePane;
 
     @Inject
-    public LabelToolPanel(@Named(TOOL_ID + "field") BrowsableOutputDirectoryField destinationDirectoryField,
-                          // @Named(TOOL_ID + "pane") PdfDestinationPane destinationPane,
-                          @Named(TOOL_ID + "pane") SizeChoosePane sizeChoosePane,
-                          @Named(TOOL_ID + "footer") Footer footer) {
+    public LabelToolPanel(@Named(TOOL_ID + "footer") Footer footer) {
         super(TOOL_ID, footer);
         this.selectionPane = new TaskParametersBuilderSingleSelectionPane(TOOL_ID);
         selectionPane.setSpacing(Style.DEFAULT_SPACING);
         selectionPane.getStyleClass().addAll(Style.CONTAINER.css());
         selectionPane.getStyleClass().addAll(Style.VCONTAINER.css());
-        this.destinationDirectoryField = destinationDirectoryField;
         this.paperChoosePane = new PaperChoosePane(TOOL_ID);
-        this.sizeChoosePane = sizeChoosePane;
-        // this.destinationPane = destinationPane;
+        this.destinationDirectoryField = new BrowsableOutputDirectoryField();
+        this.sizeChoosePane = new SizeChoosePane(destinationDirectoryField, TOOL_ID);
+//        this.destinationPane = new PdfDestinationPane(destinationDirectoryField, TOOL_ID, false);
 //        this.prefix = prefix;
         initModuleSettingsPanel(getPanel());
     }
@@ -65,6 +62,7 @@ public class LabelToolPanel extends BaseToolPanel {
             titledPane(i18n().tr("odet file"), selectionPane),
             titledPane(i18n().tr("barcode file"), paperChoosePane),
             titledPane(i18n().tr("combined setting"), sizeChoosePane)
+//            titledPane(i18n().tr("output setting"), destinationPane)
         );
         return vBox;
     }
@@ -90,7 +88,7 @@ public class LabelToolPanel extends BaseToolPanel {
         } else {
             onError.accept(i18n().tr("A directory is required"));
         }
-        // destinationPane.apply(builder, onError);
+//        destinationPane.apply(builder, onError);
         paperChoosePane.apply(builder, onError);
         selectionPane.apply(builder, onError);
         sizeChoosePane.apply(builder, onError);

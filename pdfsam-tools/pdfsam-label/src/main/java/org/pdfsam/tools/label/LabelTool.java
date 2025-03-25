@@ -62,17 +62,11 @@ public class LabelTool implements Tool {
     }
 
     public static class ModuleConfig {
-        @Provides
-        @Named(TOOL_ID + "field")
-        public BrowsableOutputDirectoryField destinationDirectoryField() {
-            return new BrowsableOutputDirectoryField();
-        }
-
-        @Provides
-        @Named(TOOL_ID + "pane")
-        public SizeChoosePane destinationDirectoryField(@Named(TOOL_ID + "field") BrowsableOutputDirectoryField outputField) {
-            return new SizeChoosePane(outputField, TOOL_ID);
-        }
+//        @Provides
+//        @Named(TOOL_ID + "field")
+//        public BrowsableOutputDirectoryField destinationDirectoryField() {
+//            return new BrowsableOutputDirectoryField();
+//        }
 
 //        @Provides
 //        @Named(TOOL_ID + "pane")
@@ -92,11 +86,11 @@ public class LabelTool implements Tool {
             return new OpenButton(TOOL_ID, ToolInputOutputType.MULTIPLE_PDF);
         }
 
-        @Provides
-        @Named(TOOL_ID + "prefix")
-        public PrefixPane prefixPane() {
-            return new PrefixPane(TOOL_ID, new PreferencesRepository("/org/pdfsam/user/conf/" + TOOL_ID));
-        }
+//        @Provides
+//        @Named(TOOL_ID + "prefix")
+//        public PrefixPane prefixPane() {
+//            return new PrefixPane(TOOL_ID, new PreferencesRepository("/org/pdfsam/user/conf/" + TOOL_ID));
+//        }
     }
 
 }

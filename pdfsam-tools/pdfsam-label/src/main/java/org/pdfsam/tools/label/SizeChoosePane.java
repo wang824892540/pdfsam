@@ -41,19 +41,17 @@ import static org.pdfsam.tools.label.LabelTool.TOOL_ID;
  * @author y
  * @date 2025/03/19 18:27
  **/
-public class SizeChoosePane extends VBox implements TaskParametersBuildStep<LabelParametersBuilder>, ToolBound {
+public class SizeChoosePane extends VBox implements TaskParametersBuildStep<LabelParametersBuilder> {
 
     private final ValidableTextField width;
     private final ValidableTextField height;
     private final ValidableTextField fileName;
-    private final BrowsableOutputDirectoryField outputDir;
-    private final String toolBinding;
+    // private final BrowsableOutputDirectoryField outputDir;
+    private final PdfDestinationPane pdfDestinationPane;
 
     @Inject
-    public SizeChoosePane(@Named(TOOL_ID + "field") BrowsableOutputDirectoryField destinationPane, String owner) {
+    public SizeChoosePane(BrowsableOutputDirectoryField destinationPane, String owner) {
         super(Style.DEFAULT_SPACING);
-        toolBinding = owner;
-        destinationPane.setId(owner + ".destination");
 
         getStyleClass().addAll(Style.CONTAINER.css());
         getStyleClass().addAll(Style.VCONTAINER.css());
@@ -78,12 +76,14 @@ public class SizeChoosePane extends VBox implements TaskParametersBuildStep<Labe
         fileName.setErrorMessage(i18n().tr("file name cannot be empty"));
         final TextFieldWithUnit fileNameUnit = new TextFieldWithUnit(fileName, ".pdf", 110D);
 
-        outputDir = destinationPane;
+//        outputDir = destinationPane;
+//
+//        final Label outputDirLabel = new Label(i18n().tr("output directory"));
+//        HBox widthHeightBoxOutputDir = new HBox(Style.DEFAULT_SPACING);
+//        widthHeightBoxOutputDir.setAlignment(Pos.CENTER_LEFT);
+//        widthHeightBoxOutputDir.getChildren().addAll(outputDirLabel, outputDir);
 
-        final Label outputDirLabel = new Label(i18n().tr("output directory"));
-        HBox widthHeightBoxOutputDir = new HBox(Style.DEFAULT_SPACING);
-        widthHeightBoxOutputDir.setAlignment(Pos.CENTER_LEFT);
-        widthHeightBoxOutputDir.getChildren().addAll(outputDirLabel, outputDir);
+        pdfDestinationPane = new PdfDestinationPane(destinationPane, owner, false);
 
         final Label fileNameLabel = new Label(i18n().tr("FileName"));
         HBox widthHeightBoxFileName = new HBox(Style.DEFAULT_SPACING);
@@ -96,7 +96,7 @@ public class SizeChoosePane extends VBox implements TaskParametersBuildStep<Labe
         final Label heightLabel = new Label(i18n().tr("Height"));
         widthHeightBox.getChildren().addAll(widthLabel, widthWithUnit, heightLabel, heightWithUnit);
 
-        this.getChildren().addAll(widthHeightBoxOutputDir, widthHeightBoxFileName, widthHeightBox);
+        this.getChildren().addAll(pdfDestinationPane, widthHeightBoxFileName, widthHeightBox);
     }
 
     @Override
@@ -116,31 +116,12 @@ public class SizeChoosePane extends VBox implements TaskParametersBuildStep<Labe
             onError.accept(i18n().tr("file name cannot be empty"));
             return;
         }
-        ValidableTextField textField = outputDir.getTextField();
-        textField.validate();
 
         builder.setWidth(Float.valueOf(widthDouble));
         builder.setHeight(Float.valueOf(heightDouble));
         builder.setFileName(fileNameText);
-        builder.setOutputDir(outputDir);
+        pdfDestinationPane.apply(builder, onError);
     }
 
-    @Override
-    @EventStation
-    public String toolBinding() {
-        return toolBinding;
-    }
-
-    @EventListener
-    public void setDestination(SetDestinationRequest event) {
-        if (!event.fallback() || (isBlank(destination().getTextField().getText()) && app().persistentSettings()
-                .get(BooleanPersistentProperty.SMART_OUTPUT))) {
-            destination().setTextFromFile(event.footprint().toPath());
-        }
-    }
-
-    public BrowsableOutputDirectoryField destination() {
-        return outputDir;
-    }
 }
 

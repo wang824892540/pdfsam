@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.pdfsam.ui.components.io.BrowsableFileField;
 import org.pdfsam.ui.components.io.BrowsableOutputDirectoryField;
+import org.pdfsam.ui.components.io.PdfDestinationPane;
 import org.pdfsam.ui.components.selection.single.SingleSelectionPane;
 import org.sejda.model.input.PdfFileSource;
 import org.sejda.model.input.PdfSource;
@@ -17,15 +18,6 @@ public class LabelParameters extends MultiplePdfSourceMultipleOutputParameters {
     Float width;
     Float height;
     String fileName;
-    BrowsableOutputDirectoryField outputDir;
-
-    public BrowsableOutputDirectoryField getOutputDir() {
-        return outputDir;
-    }
-
-    public void setOutputDir(BrowsableOutputDirectoryField outputDir) {
-        this.outputDir = outputDir;
-    }
 
     public String getFileName() {
         return fileName;
