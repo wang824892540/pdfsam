@@ -14,7 +14,7 @@ public class TextFieldWithUnit extends StackPane {
 
     public TextFieldWithUnit(TextField textField, String unit, Double minWidth) {
         Label unitLabel = new Label(unit);
-        unitLabel.setStyle("-fx-text-fill: #323332; -fx-background-color: #6BE659; -fx-background-radius: 3px; -fx-padding: 0 3px;");
+        unitLabel.setStyle("-fx-text-fill: white; -fx-background-color: #1C913E; -fx-background-radius: 3px; -fx-padding: 0 3px;");
         StackPane.setAlignment(unitLabel, Pos.CENTER_RIGHT);
         StackPane.setMargin(unitLabel, new Insets(0, 4, 0, 0));
 

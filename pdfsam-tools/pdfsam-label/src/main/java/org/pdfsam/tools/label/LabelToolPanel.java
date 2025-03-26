@@ -4,12 +4,8 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import javafx.scene.layout.VBox;
 import org.apache.commons.lang3.builder.Builder;
-import org.pdfsam.eventstudio.annotation.EventListener;
 import org.pdfsam.eventstudio.annotation.EventStation;
-import org.pdfsam.model.tool.ClearToolRequest;
 import org.pdfsam.ui.components.io.BrowsableOutputDirectoryField;
-import org.pdfsam.ui.components.io.PdfDestinationPane;
-import org.pdfsam.ui.components.selection.single.SingleSelectionPane;
 import org.pdfsam.ui.components.selection.single.TaskParametersBuilderSingleSelectionPane;
 import org.pdfsam.ui.components.support.FXValidationSupport;
 import org.pdfsam.ui.components.support.Style;
@@ -37,7 +33,6 @@ public class LabelToolPanel extends BaseToolPanel {
     private final TaskParametersBuilderSingleSelectionPane selectionPane;
     private final PaperChoosePane paperChoosePane;
     private final BrowsableOutputDirectoryField destinationDirectoryField;
-//    private final PdfDestinationPane destinationPane;
     private final SizeChoosePane sizeChoosePane;
 
     @Inject
@@ -59,10 +54,9 @@ public class LabelToolPanel extends BaseToolPanel {
         // 创建 VBox 并添加按钮
         VBox vBox = new VBox();
         vBox.getChildren().addAll(
-            titledPane(i18n().tr("odet file"), selectionPane),
-            titledPane(i18n().tr("barcode file"), paperChoosePane),
-            titledPane(i18n().tr("combined setting"), sizeChoosePane)
-//            titledPane(i18n().tr("output setting"), destinationPane)
+                titledPane(i18n().tr("odet file"), selectionPane),
+                titledPane(i18n().tr("barcode file"), paperChoosePane),
+                titledPane(i18n().tr("combined setting"), sizeChoosePane)
         );
         return vBox;
     }
@@ -70,12 +64,18 @@ public class LabelToolPanel extends BaseToolPanel {
 
     @Override
     public void onSaveWorkspace(Map<String, String> data) {
-
+        selectionPane.saveStateTo(data);
+        paperChoosePane.saveStateTo(data);
+        destinationDirectoryField.saveStateTo(data);
+        sizeChoosePane.saveStateTo(data);
     }
 
     @Override
     public void onLoadWorkspace(Map<String, String> data) {
-
+        selectionPane.restoreStateFrom(data);
+        paperChoosePane.restoreStateFrom(data);
+        destinationDirectoryField.restoreStateFrom(data);
+        sizeChoosePane.restoreStateFrom(data);
     }
 
     @Override

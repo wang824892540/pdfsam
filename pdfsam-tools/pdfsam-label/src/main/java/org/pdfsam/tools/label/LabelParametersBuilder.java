@@ -9,6 +9,7 @@ import org.pdfsam.ui.components.selection.single.SingleSelectionPane;
 import org.sejda.model.input.PdfFileSource;
 import org.sejda.model.output.ExistingOutputPolicy;
 import org.sejda.model.output.SingleOrMultipleTaskOutput;
+import org.sejda.model.pdf.PdfVersion;
 
 import java.io.File;
 
@@ -25,7 +26,6 @@ public class LabelParametersBuilder extends MultiplePdfSourceMultipleOutputParam
     Float height;
     String fileName;
 
-
     public String getFileName() {
         return fileName;
     }
@@ -39,11 +39,16 @@ public class LabelParametersBuilder extends MultiplePdfSourceMultipleOutputParam
         LabelParameters labelParameters = new LabelParameters();
         labelParameters.setOutput(getOutput());
         labelParameters.setBackPdf(backPdf);
-        labelParameters.setExistingOutputPolicy(ExistingOutputPolicy.OVERWRITE);
         labelParameters.setWidth(width);
         labelParameters.setHeight(height);
         labelParameters.setFileName(fileName);
         getInputs().forEach(labelParameters::addSource);
+        final ExistingOutputPolicy existingOutputPolicy = existingOutput();
+        final boolean compress = isCompress();
+        final PdfVersion version = getVersion();
+        labelParameters.setExistingOutputPolicy(existingOutputPolicy);
+        labelParameters.setCompress(compress);
+        labelParameters.setVersion(version);
         return labelParameters;
     }
 

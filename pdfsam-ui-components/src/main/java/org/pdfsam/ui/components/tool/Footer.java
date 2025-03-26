@@ -18,6 +18,7 @@
  */
 package org.pdfsam.ui.components.tool;
 
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -117,12 +118,14 @@ public class Footer extends HBox implements ToolBound {
 
     @EventListener
     public void onProgress(PercentageOfWorkDoneChangedEvent event) {
-        statusLabel.setText(i18n().tr("Running"));
-        if (event.isUndetermined()) {
-            bar.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
-        } else {
-            bar.setProgress(event.getPercentage().divide(new BigDecimal(100), RoundingMode.HALF_UP).doubleValue());
-            statusLabel.setText(i18n().tr("Running {0}%", Integer.toString(event.getPercentage().intValue())));
-        }
+        Platform.runLater(() -> {
+            statusLabel.setText(i18n().tr("Running"));
+            if (event.isUndetermined()) {
+                bar.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
+            } else {
+                bar.setProgress(event.getPercentage().divide(new BigDecimal(100), 2, RoundingMode.HALF_UP).doubleValue());
+                statusLabel.setText(i18n().tr("Running {0}%", Integer.toString(event.getPercentage().intValue())));
+            }
+        });
     }
 }
