@@ -19,6 +19,7 @@
 package org.pdfsam.gui.components.content.workspace;
 
 import jakarta.inject.Inject;
+import javafx.application.Platform;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
@@ -102,8 +103,10 @@ public class WorkspaceMenu extends ContextMenu {
 
     @EventListener
     public void onWorkspaceLoaded(WorkspaceLoadedEvent e) {
-        recent.getItems().clear();
-        service.getRecentlyUsedWorkspaces().stream().map(WorkspaceMenuItem::new).forEach(recent.getItems()::add);
-        latestWorkspace = of(e.workspace().toPath());
+        Platform.runLater(() -> {
+            recent.getItems().clear();
+            service.getRecentlyUsedWorkspaces().stream().map(WorkspaceMenuItem::new).forEach(recent.getItems()::add);
+            latestWorkspace = of(e.workspace().toPath());
+        });
     }
 }
