@@ -51,6 +51,11 @@ import static org.pdfsam.ui.components.io.PdfDestinationPane.DestinationPanelFie
 @Auto
 public class SplitTool implements Tool {
 
+    @Override
+    public boolean enable() {
+        return true;
+    }
+
     static final String TOOL_ID = "split.simple";
 
     private final ToolDescriptor descriptor = builder().category(ToolCategory.SPLIT)

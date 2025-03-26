@@ -21,6 +21,8 @@ package org.pdfsam.model.tool;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
+import java.util.ServiceLoader;
+
 /**
  * A PDFsam Basic tool.
  *
@@ -54,6 +56,15 @@ public interface Tool {
      */
     default RequiredPdfData[] requires() {
         return new RequiredPdfData[] { RequiredPdfData.DEFAULT };
+    }
+
+    /**
+     * disable
+     *
+     * @return disable
+     */
+    default boolean enable() {
+        return false;
     }
 
 }

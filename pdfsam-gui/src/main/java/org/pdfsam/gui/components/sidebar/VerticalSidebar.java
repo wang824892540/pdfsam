@@ -38,6 +38,7 @@ import org.pdfsam.model.ui.SetActiveContentItemRequest;
 import org.pdfsam.model.ui.ShowLogMessagesRequest;
 
 import static javafx.scene.layout.VBox.setVgrow;
+import static org.pdfsam.core.ConfigurableSystemProperty.PDFSAM_DISABLE_SETTINGS_DEPRECATED;
 import static org.pdfsam.eventstudio.StaticStudio.eventStudio;
 import static org.pdfsam.gui.components.sidebar.SelectableSidebarButton.of;
 import static org.pdfsam.i18n.I18nContext.i18n;
@@ -80,7 +81,9 @@ public class VerticalSidebar extends BorderPane {
         buttons.getChildren().add(spacer);
         addButton(workspaceButton, expandButton);
         addButton(logButton, expandButton);
-        addButton(newsButton, expandButton);
+        if (!newsButton.disable()) {
+            addButton(newsButton, expandButton);
+        }
         addButton(aboutItem, expandButton);
         addButton(preferenceItem, expandButton);
         buttons.getChildren().add(new Separator(Orientation.HORIZONTAL));

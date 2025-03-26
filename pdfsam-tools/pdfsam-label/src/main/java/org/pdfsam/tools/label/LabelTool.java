@@ -29,7 +29,7 @@ public class LabelTool implements Tool {
 
     private final ToolDescriptor descriptor = builder().category(ToolCategory.LABEL)
             .inputTypes(ToolInputOutputType.MULTIPLE_PDF, ToolInputOutputType.SINGLE_PDF).name(i18n().tr(TOOL_ID))
-            .description(i18n().tr("Shein Label pages from PDF documents.")).priority(ToolPriority.DEFAULT.getPriority())
+            .description(i18n().tr("Shein Label from PDF documents.")).priority(ToolPriority.DEFAULT.getPriority())
             //.supportURL("https://pdfsam.org/pdf-extract-pages/")
             .build();
 
@@ -50,7 +50,7 @@ public class LabelTool implements Tool {
 
     @Override
     public Node graphic() {
-        var icon = new FontIcon(UniconsLine.FILE_EXPORT);
+        var icon = new FontIcon(UniconsLine.CODE_BRANCH);
         icon.getStyleClass().addAll(this.descriptor().category().styleClass(), "tool-icon");
         return icon;
     }
@@ -71,4 +71,8 @@ public class LabelTool implements Tool {
 
     }
 
+    @Override
+    public boolean enable() {
+        return true;
+    }
 }

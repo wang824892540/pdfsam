@@ -15,6 +15,7 @@ import org.pdfsam.gui.components.content.about.AboutContentItem;
 import org.pdfsam.gui.components.content.about.AboutPane;
 import org.pdfsam.gui.components.content.home.HomeContentItem;
 import org.pdfsam.gui.components.content.home.HomePane;
+import org.pdfsam.gui.components.content.log.LogContentItem;
 import org.pdfsam.gui.components.content.preference.PreferenceContentItem;
 import org.pdfsam.gui.components.content.preference.PreferencePane;
 import org.pdfsam.i18n.SetLocaleRequest;
@@ -155,8 +156,8 @@ class VerticalSidebarUITest {
 
         @Provides
         public VerticalSidebar sidebar(HomeContentItem homeItem, LogButton logButton, NewsButton newsButton,
-                PreferenceContentItem preferenceItem, AboutContentItem aboutItem, WorkspaceButton workspaceButton,
-                ToolsButtons toolsButtons) {
+                                       PreferenceContentItem preferenceItem, AboutContentItem aboutItem, WorkspaceButton workspaceButton,
+                                       ToolsButtons toolsButtons) {
             return new VerticalSidebar(homeItem, logButton, newsButton, preferenceItem, aboutItem, workspaceButton,
                     toolsButtons);
         }

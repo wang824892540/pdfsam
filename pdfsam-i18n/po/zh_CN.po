@@ -23,11 +23,17 @@ msgstr "未选中PDF文档"
 msgid "Extract"
 msgstr "提取(_E)"
 
+msgid "Shein Label from PDF documents."
+msgstr "Shein标签文档处理 对欧代文件和条码文件进行循环合并"
+
 msgid "Extract pages from PDF documents."
 msgstr "从PDF文档中提取页面。"
 
 msgid "width cannot be empty"
 msgstr "宽不能为空"
+
+msgid "Label tools"
+msgstr "标签工具"
 
 msgid "width"
 msgstr "宽"

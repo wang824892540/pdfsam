@@ -28,6 +28,7 @@ import org.pdfsam.eventstudio.annotation.EventListener;
 import org.pdfsam.model.news.LatestNewsResponse;
 import org.pdfsam.model.news.ToggleNewsPanelRequest;
 
+import static org.pdfsam.core.ConfigurableSystemProperty.PDFSAM_DISABLE_NEWS;
 import static org.pdfsam.eventstudio.StaticStudio.eventStudio;
 import static org.pdfsam.i18n.I18nContext.i18n;
 
@@ -57,6 +58,15 @@ public class NewsButton extends SidebarButtonWithNotification<SidebarButton> {
                 }
             });
         }
+    }
+
+    /**
+     * PDFSAM_DISABLE_NEWS
+     *
+     * @return is disable
+     */
+    public boolean disable() {
+        return !Boolean.getBoolean(PDFSAM_DISABLE_NEWS);
     }
 
 }

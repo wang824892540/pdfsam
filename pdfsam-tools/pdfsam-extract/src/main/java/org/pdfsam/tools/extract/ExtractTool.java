@@ -51,6 +51,11 @@ import static org.pdfsam.ui.components.io.PdfDestinationPane.DestinationPanelFie
 @Auto
 public class ExtractTool implements Tool {
 
+    @Override
+    public boolean enable() {
+        return true;
+    }
+
     static final String TOOL_ID = "extract";
 
     private final ToolDescriptor descriptor = builder().category(ToolCategory.SPLIT)

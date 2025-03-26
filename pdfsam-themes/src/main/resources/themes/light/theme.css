@@ -572,6 +572,11 @@ Categories
     -fx-icon-color: -category-split-color !important;
 }
 
+.category-label {
+    -fx-background-color: -category-label-color;
+    -fx-icon-color: -category-label-color !important;
+}
+
 .category-merge {
     -fx-background-color: -category-merge-color;
     -fx-icon-color: -category-merge-color !important;

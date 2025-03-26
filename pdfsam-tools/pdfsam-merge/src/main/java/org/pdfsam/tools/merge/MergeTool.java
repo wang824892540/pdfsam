@@ -48,6 +48,11 @@ import static org.pdfsam.model.tool.ToolDescriptorBuilder.builder;
 @Auto
 public class MergeTool implements Tool {
 
+    @Override
+    public boolean enable() {
+        return true;
+    }
+
     static final String TOOL_ID = "merge";
 
     private final ToolDescriptor descriptor = builder().category(ToolCategory.MERGE)
