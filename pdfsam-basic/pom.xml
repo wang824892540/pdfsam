@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.pdfsam</groupId>
         <artifactId>pdfsam-parent</artifactId>
-        <version>5.3.1-SNAPSHOT</version>
+        <version>5.3.2-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -232,7 +232,7 @@
                                         <argument>"Open source desktop application to split, merge, rotate, extract pages and mix PDF files"
                                         </argument>
                                         <argument>--copyright</argument>
-                                        <argument>"Copyright 2023, Sober Lemur S.r.l."</argument>
+                                        <argument>"Copyright 2025, Sober Lemur S.r.l."</argument>
                                         <argument>--vendor</argument>
                                         <argument>"Sober Lemur S.r.l."</argument>
                                         <argument>--icon</argument>

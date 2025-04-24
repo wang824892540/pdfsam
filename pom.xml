@@ -4,7 +4,7 @@
     <groupId>org.pdfsam</groupId>
     <artifactId>pdfsam-parent</artifactId>
     <packaging>pom</packaging>
-    <version>5.3.1-SNAPSHOT</version>
+    <version>5.3.2-SNAPSHOT</version>
     <name>PDFsam</name>
     <description>A free open source desktop application to split and merge pdf documents</description>
     <url>https://pdfsam.org</url>
@@ -55,6 +55,9 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
                             <excludedGroups>NoHeadless</excludedGroups>
+                            <useModulePath>false</useModulePath>
+                            <!-- remove this once Foreign Function & Memory API is out of preview-->
+                            <argLine>--enable-preview</argLine>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -317,7 +320,7 @@
         <slf4j.version>2.0.17</slf4j.version>
         <commons.lang.version>3.17.0</commons.lang.version>
         <commons.io.version>2.19.0</commons.io.version>
-        <mockito.version>5.16.1</mockito.version>
+        <mockito.version>5.17.0</mockito.version>
         <tinylog.version>2.7.0</tinylog.version>
         <hibernate-validator.version>7.0.5.Final</hibernate-validator.version>
         <sejda.version>5.1.10</sejda.version>
@@ -439,6 +442,16 @@
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-graphics</artifactId>
                 <version>${javafx.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-media</artifactId>
+                <version>${javafx.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jcl-over-slf4j</artifactId>
+                <version>${slf4j.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.bouncycastle</groupId>

@@ -27,7 +27,7 @@ jobs:
           fingerprint: ${{ secrets.GPG_SUB_FINGERPRINT }}
       - name: Set up Apple certs
         if: runner.os == 'macOS'
-        uses: apple-actions/import-codesign-certs@v3
+        uses: apple-actions/import-codesign-certs@v5
         with:
           p12-file-base64: ${{ secrets.APPLE_CERT_P12 }}
           p12-password: ${{ secrets.APPLE_CERT_P12_PWD }}
@@ -44,9 +44,14 @@ jobs:
         if: matrix.os == 'macos-latest'
         run: brew install gettext
 
+      - name: Install scoop on Windows
+        if: matrix.os == 'windows-latest'
+        uses: MinoruSekine/setup-scoop@v4
+
       - name: Install gettext on Windows
         if: matrix.os == 'windows-latest'
-        run: choco install gettext --version=0.21.1
+        run: scoop install gettext
+
       - name: Build
         env:
           APPLEID: ${{ secrets.NOTARIZE_ACCOUNT }}
